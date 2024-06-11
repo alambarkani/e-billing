@@ -18,6 +18,8 @@
     <div class="p-4 sm:ml-64">
         @yield('content')
     </div>
+
+    <script src="/js/script.js"></script>
 </body>
 
 </html>

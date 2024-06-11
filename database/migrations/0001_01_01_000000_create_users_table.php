@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('customer_id')->nullable()->unique();
+            $table->string('account');
             $table->enum('role', ['super_admin', 'admin', 'customer'])->default('customer');
             $table->string('password');
             $table->rememberToken();
