@@ -14,6 +14,8 @@
     <div>
         @include('partials.navbar')
         @include('partials.sidebar')
+    </div>
+    <div class="p-4 sm:ml-64">
         @yield('content')
     </div>
 </body>
