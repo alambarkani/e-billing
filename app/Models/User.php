@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -19,10 +18,20 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'customer_id',
+        'account',
         'role',
         'password',
+        'nik',
+        'phone',
+        'address',
+        'internet_package_id',
     ];
+
+    public function internetPackage()
+    {
+
+        return $this->belongsTo(InternetPackage::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

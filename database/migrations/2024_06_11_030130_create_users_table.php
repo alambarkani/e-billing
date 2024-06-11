@@ -13,11 +13,18 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('account');
+            $table->string('name');
+            $table->string('account')->unique();
+            $table->string('nik')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->unsignedBigInteger('internet_package_id')->nullable();
             $table->enum('role', ['super_admin', 'admin', 'customer'])->default('customer');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('internet_package_id')->references('id')->on('internet_packages')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

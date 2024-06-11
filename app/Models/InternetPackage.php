@@ -9,8 +9,8 @@ class InternetPackage extends Model
 {
     use HasFactory;
 
-    public function customers()
+    public function user()
     {
-        return $this->hasMany(Customer::class);
+        return $this->hasMany(User::class);
     }
 }
