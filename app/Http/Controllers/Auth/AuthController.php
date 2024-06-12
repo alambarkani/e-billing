@@ -20,17 +20,39 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|max:50|string',
-            'nik' => 'required|string',
+            'identity' => 'required|string',
             'phone' => 'required|numeric',
-            'address' => 'required|string'
+            'address' => 'required|string',
+            'internet_package_id' => 'required',
+            'house_image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
+            'ktp_image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
         ]);
+
+        $houseImg = $request->file('house_image');
+        $ktpImg = $request->file('ktp_image');
+
+        $houseImgName = 'house_' . time() . '.' . $houseImg->getClientOriginalExtension();
+        $ktpImgName = 'ktp_' . time() . '.' . $ktpImg->getClientOriginalExtension();
+
 
         $user = new User();
         $user->name = $request->name;
-        $user->nik = $request->nik;
+        do {
+            $randomInt = random_int(1000, 9999);
+            $exists = User::where('account', $randomInt)->exists();
+        } while ($exists);
+        $user->account = $randomInt;
+        $user->password = random_int(1000, 9999);
+        $user->identity = $request->identity;
         $user->phone = $request->phone;
         $user->address = $request->address;
         $user->internet_package_id = $request->internet_package_id;
+
+        $houseImg->storeAs('public/images/', $user->identity . '/' . $houseImgName);
+        $ktpImg->storeAs('public/images/', $user->identity . '/' . $ktpImgName);
+
+        $user->house_image_path = $houseImgName;
+        $user->ktp_image_path = $ktpImgName;
         $user->save();
         return back()->with('success', 'Register successfully');
     }

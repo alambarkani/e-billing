@@ -11,7 +11,7 @@
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">??</h5>
                 </div>
                 <p class="mb-3 font-normal text-gray-200">Data Pelanggan</p>
-                <a href="#"
+                <a href="{{ route('admin.datas.customer.index') }}"
                     class="inline-flex justify-center items-center px-3 py-2 mt-6 text-sm font-medium text-center text-white bg-green-600 rounded-br-lg rounded-bl-lg hover:bg-green-800 focus:ring-2 focus:outline-none focus:ring-green-300">
                     Selengkapnya
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"

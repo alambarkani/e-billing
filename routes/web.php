@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\InternetPackageController;
+use App\Http\Controllers\User\CustomerController;
 use Illuminate\Auth\Events\Login;
 
 Route::get('/', [HomeController::class, 'index']);
@@ -19,10 +21,18 @@ Route::group(['middleware' => 'guest'], function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [HomeController::class, 'index']);
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Admin and Above
     Route::middleware(['isAdmin'])->group(function () {
         // Protected routes here
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::resource('users', UserController::class);
+            Route::prefix('datas')->name('datas.')->group(function () {
+                Route::resource('customer', CustomerController::class);
+                Route::resource('internetpackage', InternetPackageController::class);
+            });
         });
     });
+
+    // Super Admin
 });

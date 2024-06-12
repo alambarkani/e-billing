@@ -39,6 +39,7 @@ class User extends Authenticatable
         return [
             'name' => $this->name,
             'account' => $this->account,
+            'role' => $this->role,
         ];
     }
 
