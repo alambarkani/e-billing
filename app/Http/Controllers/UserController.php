@@ -5,14 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class UserController extends Controller
 {
     //
-    public function index(): View
+    public function index(Request $request): View
     {
-        $users = User::latest()->paginate(5);
+        if ($request->keyword) {
+            $users = User::search($request->keyword)->latest()->paginate(5);
+            return view('pages.admin.user.index', compact('users'));
+        } else {
+            $users = User::latest()->paginate(5);
+        }
         return view('pages.admin.user.index', compact('users'));
     }
 
@@ -26,9 +32,9 @@ class UserController extends Controller
 
         $request->validate([
             'name' => 'required|string',
-            'account' => 'required_if:role,customer',
+            'account' => 'required',
             'role' => 'required|string|in:super_admin,admin,customer',
-            'password' => 'required|string|confirmed|min:8',
+            'password' => 'required|string|confirmed',
             'nik' => [
                 'required_if:role,customer',
             ],
@@ -59,6 +65,9 @@ class UserController extends Controller
 
     public function edit(User $user): View
     {
+        if (Auth::user()->role != 'super_admin') {
+            return redirect()->route('admin.users.index')->with(['error' => 'Tidak Bisa Mengedit Super Admin']);
+        }
         return view('pages.admin.user.edit', compact('user'));
     }
 
@@ -70,8 +79,14 @@ class UserController extends Controller
 
     public function destroy(User $user): RedirectResponse
     {
-        $user->delete();
-        return redirect()->route('admin.users.index')->with(['success' => 'Berhasil Menghapus User']);
+        if ($user->id == Auth::id()) {
+            return redirect()->route('admin.users.index')->with(['error' => 'Tidak bisa menghapus akun sendiri']);
+        } else if ($user->role == 'super_admin') {
+            return redirect()->route('admin.users.index')->with(['error' => 'Tidak bisa menghapus super admin']);
+        } else {
+            $user->delete();
+            return redirect()->route('admin.users.index')->with(['success' => 'Berhasil Menghapus User']);
+        }
     }
 
     public function show(User $user): View

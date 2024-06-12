@@ -2,18 +2,23 @@
 
 @section('content')
 
-    @if (session('success'))
-        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
-            role="alert">
-            <span class="font-medium">{{ session('success') }}</span>
-        </div>
-    @endif
     <section class="bg-gray-50 dark:bg-gray-900 p-3 mt-12 sm:p-5">
+        @if (session('success'))
+            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                role="alert">
+                <span class="font-medium">{{ session('success') }}</span>
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                <span class="font-medium">{{ session('error') }}</span>
+            </div>
+        @endif
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
             <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
-                        <form class="flex items-center">
+                        <form class="flex items-center" method="GET" action="{{ route('admin.users.index') }}">
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -24,7 +29,7 @@
                                             clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <input type="text" id="simple-search"
+                                <input type="text" id="simple-search" name="keyword"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Search" required="">
                             </div>
@@ -123,10 +128,10 @@
                                     <td class="px-4 py-3 flex items-center gap-2 justify-center">
                                         <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}"
                                             class="font-medium text-white bg-blue-500 px-2 py-1 rounded border hover:bg-blue-800">Edit</a>
-                                        <button data-modal-target="delete-modal" data-modal-toggle="delete-modal"
-                                            type="button"
+                                        <button data-modal-target="delete-modal-{{ $user->id }}"
+                                            data-modal-toggle="delete-modal-{{ $user->id }}" type="button"
                                             class="font-medium text-white bg-red-500 px-2 py-1 rounded border hover:bg-red-800">Delete</button>
-                                        @include('components.modals.delete')
+                                        @include('components.modals.delete', ['userId' => $user->id])
                                         <a href="{{ route('admin.users.show', ['user' => $user->id]) }}"
                                             class="font-medium text-blue-600 hover:underline">View</a>
                                     </td>
@@ -142,11 +147,7 @@
 
 
                 {{-- Pagination --}}
-                <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
-                    aria-label="Table navigation">
-
-                    {!! $users->links() !!}
-                </nav>
+                {!! $users->links() !!}
             </div>
         </div>
     </section>
