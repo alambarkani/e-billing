@@ -69,7 +69,7 @@
                             <div>{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="sm:col-span-2 hidden admin-block">
+                    <div class="sm:col-span-2">
                         <label for="name"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                         <input type="text" name="name" id="name"
@@ -79,7 +79,7 @@
                             <div>{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="sm:col-span-2 hidden pass-block">
+                    <div class="sm:col-span-2">
                         <label for="account"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Account</label>
                         <input type="text" name="account" id="account"
@@ -89,7 +89,7 @@
                             <div>{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="sm:col-span-2 hidden pass-block">
+                    <div class="sm:col-span-2">
                         <label for="password"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                         <input type="password" name="password" id="password"
@@ -99,7 +99,7 @@
                             <div>{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="sm:col-span-2 hidden pass-block">
+                    <div class="sm:col-span-2">
                         <label for="password_confirmation"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm
                             Password</label>

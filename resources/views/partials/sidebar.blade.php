@@ -223,16 +223,21 @@
                 </a>
             </li>
             <li>
-                <a href="#"
-                    class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700  group">
-                    <svg class="w-6 h-6 text-red-800 group-hover:text-red-400" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2" />
-                    </svg>
-                    <span class="ms-3">Logout</span>
-                </a>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button href="#"
+                        class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700  group">
+                        <svg class="w-6 h-6 text-red-800 group-hover:text-red-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                            viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2" />
+                        </svg>
+                        <span class="ms-3">Logout</span>
+                    </button>
+                </form>
             </li>
         </ul>
     </div>
