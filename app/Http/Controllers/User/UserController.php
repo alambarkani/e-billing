@@ -15,8 +15,7 @@ class UserController extends Controller
     public function index(Request $request): View
     {
         if ($request->keyword) {
-            $users = User::where('role', 'admin')->orWhere('role', 'super_admin')
-                ->search($request->keyword)
+            $users = User::search($request->keyword)->where('role', 'admin', 'super_admin')
                 ->latest()
                 ->paginate(5);
         } else {

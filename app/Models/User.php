@@ -28,15 +28,10 @@ class User extends Authenticatable
         'internet_package_id',
     ];
 
-    public function internetPackage()
-    {
-
-        return $this->belongsTo(InternetPackage::class);
-    }
 
     public function customer()
     {
-        return $this->hasOne(Customer::class, 'customer_id');
+        return $this->hasOne(Customer::class, 'user_id');
     }
 
     public function toSearchableArray()

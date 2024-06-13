@@ -14,8 +14,8 @@ class InternetPackage extends Model
         'price',
     ];
 
-    public function user()
+    public function customer()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Customer::class, 'internet_package_id');
     }
 }

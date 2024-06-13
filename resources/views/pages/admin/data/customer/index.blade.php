@@ -44,18 +44,25 @@
                                 <path clip-rule="evenodd" fill-rule="evenodd"
                                     d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                             </svg>
-                            Add User
+                            Add Customer
                         </a>
                     </div>
                 </div>
-                <div class="overflow-x-auto">
+                <div class="overflow-auto">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-4 py-3">No</th>
-                                <th scope="col" class="px-4 py-3">Name</th>
+                                <th scope="col" class="px-4 py-3">Nama</th>
+                                <th scope="col" class="px-4 py-3">No Identitas</th>
+                                <th scope="col" class="px-4 py-3">No Telepon</th>
+                                <th scope="col" class="px-4 py-3">Alamat</th>
+                                <th scope="col" class="px-4 py-3">Nama Lokasi</th>
+                                <th scope="col" class="px-4 py-3">Paket Langganan</th>
+                                <th scope="col" class="px-4 py-3">Status Langganan</th>
+                                <th scope="col" class="px-4 py-3">Terakhir Pembayaran</th>
+                                <th scope="col" class="px-4 py-3">Tanggal Jatuh Tempo</th>
                                 <th scope="col" class="px-4 py-3">Account</th>
-                                <th scope="col" class="px-4 py-3">Role</th>
                                 <th scope="col" class="px-4 py-3 text-center">Action</th>
                             </tr>
                         </thead>
@@ -63,18 +70,35 @@
                             @forelse ($customers as $customer)
                                 <tr class="border-b">
                                     <td class="px-4 py-3">{{ $loop->iteration }}</td>
-                                    <td class="px-4 py-3">{{ $customer->name }}</td>
-                                    <td class="px-4 py-3">{{ $customer->account }}</td>
-                                    <td class="px-4 py-3">{{ $customer->role }}</td>
-                                    <td class="px-4 py-3 flex items-center gap-2 justify-center">
-                                        {{-- <a href="{{ route('admin.users.edit', ['customer' => $customer->id]) }}"
+                                    <td class="px-4 py-3">{{ $customer->user->name }}</td>
+                                    <td class="px-4 py-3">{{ $customer->identity }}</td>
+                                    <td class="px-4 py-3">{{ $customer->phone }}</td>
+                                    <td class="px-4 py-3">{{ $customer->address }}</td>
+                                    <td class="px-4 py-3">{{ $customer->location_name }}</td>
+                                    <td class="px-4 py-3">{{ $customer->internetPackage->name }}</td>
+                                    <td
+                                        class="px-4 py-3 font-bold {{ $customer->status ? 'text-green-500' : 'text-red-500' }}">
+                                        {{ $customer->status ? 'on' : 'off' }}</td>
+                                    <td class="px-4 py-3">{{ $customer->last_payment }}</td>
+                                    <td class="px-4 py-3">{{ $customer->due_date }}</td>
+                                    <td class="px-4 py-3">{{ $customer->user->account }}</td>
+                                    <td class="px-4 py-3 flex flex-col items-center gap-1 justify-center">
+                                        <a href="{{ route('admin.datas.customer.edit', ['customer' => $customer->id]) }}"
                                             class="font-medium text-white bg-blue-500 px-2 py-1 rounded border hover:bg-blue-800">Edit</a>
-                                        <button data-modal-target="delete-modal-{{ $customer->id }}"
-                                            data-modal-toggle="delete-modal-{{ $customer->id }}" type="button"
+                                        <button data-modal-target="cust-delete-modal-{{ $customer->id }}"
+                                            data-modal-toggle="cust-delete-modal-{{ $customer->id }}" type="button"
                                             class="font-medium text-white bg-red-500 px-2 py-1 rounded border hover:bg-red-800">Delete</button>
-                                        @include('components.modals.delete', ['userId' => $customer->id])
-                                        <a href="{{ route('admin.users.show', ['customer' => $customer->id]) }}"
-                                            class="font-medium text-blue-600 hover:underline">View</a> --}}
+                                        {{-- Delete Modal --}}
+                                        @include('components.modals.delete', [
+                                            'item' => $customer,
+                                            'tab' => 'cust',
+                                            'routing' => route('admin.datas.customer.destroy', [
+                                                'customer' => $customer->id,
+                                            ]),
+                                        ])
+
+                                        <a href="{{ route('admin.datas.customer.show', ['customer' => $customer->id]) }}"
+                                            class="font-medium text-blue-600 hover:underline">Details</a>
                                     </td>
                                 </tr>
                             @empty

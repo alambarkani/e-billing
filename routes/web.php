@@ -35,8 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
             });
             Route::prefix('tickets')->name('tickets.')->group(function () {
                 Route::get('openticket', [TicketController::class, 'open'])->name('openticket');
-                Route::post('accept/{customer}', [TicketController::class, 'openAccept'])->name('accept');
-                Route::post('decline/{customer}', [TicketController::class, 'openDecline'])->name('decline');
+                Route::put('accept/{customer}', [TicketController::class, 'openAccept'])->name('accept');
+                Route::delete('decline/{customer}', [TicketController::class, 'openDecline'])->name('decline');
             });
         });
     });

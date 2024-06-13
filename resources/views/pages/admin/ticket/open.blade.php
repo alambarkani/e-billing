@@ -57,13 +57,22 @@
                                     <td class="px-4 py-3 flex items-center gap-2 justify-center">
                                         <form action="{{ route('admin.tickets.accept', ['customer' => $customer->id]) }}"
                                             method="POST">
+                                            @csrf
+                                            @method('PUT')
                                             <button type="submit"
                                                 class="font-medium text-white bg-blue-500 px-2 py-1 rounded border hover:bg-blue-800">Accept</button>
                                         </form>
-                                        <button data-modal-target="delete-modal-{{ $customer->id }}"
-                                            data-modal-toggle="delete-modal-{{ $customer->id }}" type="button"
-                                            class="font-medium text-white bg-red-500 px-2 py-1 rounded border hover:bg-red-800">Delete</button>
-
+                                        <button data-modal-target="opent-delete-modal-{{ $customer->id }}"
+                                            data-modal-toggle="opent-delete-modal-{{ $customer->id }}" type="button"
+                                            class="font-medium text-white bg-red-500 px-2 py-1 rounded border hover:bg-red-800">Decline</button>
+                                        {{-- Delete Modal --}}
+                                        @include('components.modals.delete', [
+                                            'item' => $customer,
+                                            'tab' => 'opent',
+                                            'routing' => route('admin.tickets.decline', [
+                                                'customer' => $customer->id,
+                                            ]),
+                                        ])
                                     </td>
                                 </tr>
                             @empty

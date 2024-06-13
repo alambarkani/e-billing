@@ -18,8 +18,23 @@ class Customer extends Model
         'internet_package_id',
     ];
 
-    public function User()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'customer_id');
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function internetPackage()
+    {
+        return $this->belongsTo(InternetPackage::class, 'internet_package_id');
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'identity' => $this->identity,
+            'phone' => $this->phone,
+            'address' => $this->address,
+            'internet_package_id' => $this->internet_package_id,
+        ];
     }
 }
