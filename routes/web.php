@@ -6,7 +6,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\InternetPackageController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\User\CustomerController;
+use App\Models\Customer;
 use Illuminate\Auth\Events\Login;
 
 Route::get('/', [HomeController::class, 'index']);
@@ -30,6 +32,11 @@ Route::group(['middleware' => 'auth'], function () {
             Route::prefix('datas')->name('datas.')->group(function () {
                 Route::resource('customer', CustomerController::class);
                 Route::resource('internetpackage', InternetPackageController::class);
+            });
+            Route::prefix('tickets')->name('tickets.')->group(function () {
+                Route::get('openticket', [TicketController::class, 'open'])->name('openticket');
+                Route::post('accept/{customer}', [TicketController::class, 'openAccept'])->name('accept');
+                Route::post('decline/{customer}', [TicketController::class, 'openDecline'])->name('decline');
             });
         });
     });

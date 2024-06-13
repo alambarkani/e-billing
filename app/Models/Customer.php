@@ -17,4 +17,9 @@ class Customer extends Model
         'address',
         'internet_package_id',
     ];
+
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'customer_id');
+    }
 }

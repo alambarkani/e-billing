@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('internet_packages', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('price', 7, 2);
+            $table->integer('price');
             $table->timestamps();
         });
     }

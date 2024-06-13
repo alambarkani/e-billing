@@ -30,7 +30,8 @@
                         class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Registrasi
                     </h1>
-                    <form class="space-y-4 md:space-y-6" action="{{ route('register') }}" method="POST">
+                    <form class="space-y-4 md:space-y-6" action="{{ route('register') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div>
                             <label for="name"
@@ -55,23 +56,24 @@
                                 required=""></textarea>
                         </div>
                         <div>
-                            <label for="nik"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NIK</label>
-                            <input type="text" inputmode="numeric" name="nik" id="nik" placeholder="nik"
+                            <label for="identity"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">identity</label>
+                            <input type="text" name="identity" id="identity" placeholder="identity"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required="">
                         </div>
                         <div>
-                            <label for="ktp"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Foto KTP</label>
-                            <input type="file" name="ktp" id="ktp" placeholder="ktp"
+                            <label for="ktp_image"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Foto
+                                ktp_image</label>
+                            <input type="file" name="ktp_image" id="ktp_image" placeholder="ktp_image"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required="">
                         </div>
                         <div>
-                            <label for="rumah"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Foto Rumah</label>
-                            <input type="file" name="rumah" id="rumah" placeholder="rumah"
+                            <label for="house_image"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Foto rumah</label>
+                            <input type="file" name="house_image" id="house_image" placeholder="house_image"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required="">
                         </div>
@@ -79,13 +81,14 @@
                         <div>
                             <label for="countries"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Paket</label>
-                            <select id="countries"
+                            <select id="countries" name="internet_package_id"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option selected>Pilih Paket</option>
-                                <option value="US">United States</option>
-                                <option value="CA">Canada</option>
-                                <option value="FR">France</option>
-                                <option value="DE">Germany</option>
+                                @foreach ($pkgs as $pkg)
+                                    <option value="{{ $pkg->id }}">{{ $pkg->name }} -
+                                        {{ 'Rp' . number_format($pkg->price, 0, ',', '.') }}-/bulan
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 

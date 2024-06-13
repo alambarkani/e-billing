@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('address');
             $table->date('last_payment')->nullable();
             $table->string('location_name')->nullable();
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->default(false);
             $table->date('due_date')->nullable();
             $table->string('house_image_path');
             $table->string('ktp_image_path');

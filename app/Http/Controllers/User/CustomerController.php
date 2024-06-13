@@ -28,7 +28,6 @@ class CustomerController extends Controller
             'phone' => 'required|numeric',
             'address' => 'required|string',
             'internet_package_id' => 'required',
-
         ]);
     }
 }

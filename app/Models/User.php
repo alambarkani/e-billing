@@ -34,6 +34,11 @@ class User extends Authenticatable
         return $this->belongsTo(InternetPackage::class);
     }
 
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'customer_id');
+    }
+
     public function toSearchableArray()
     {
         return [

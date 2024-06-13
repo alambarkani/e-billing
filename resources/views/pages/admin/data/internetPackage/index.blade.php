@@ -64,16 +64,24 @@
                                 <tr class="border-b">
                                     <td class="px-4 py-3">{{ $loop->iteration }}</td>
                                     <td class="px-4 py-3">{{ $pkg->name }}</td>
-                                    <td class="px-4 py-3">{{ $pkg->price }}</td>
+                                    <td class="px-4 py-3">{{ 'Rp' . number_format($pkg->price, 0, ',', '.') }}</td>
                                     <td class="px-4 py-3 flex items-center gap-2 justify-center">
-                                        {{-- <a href="{{ route('admin.users.edit', ['customer' => $customer->id]) }}"
+                                        <a href="{{ route('admin.datas.internetpackage.edit', ['internetpackage' => $pkg->id]) }}"
                                             class="font-medium text-white bg-blue-500 px-2 py-1 rounded border hover:bg-blue-800">Edit</a>
-                                        <button data-modal-target="delete-modal-{{ $customer->id }}"
-                                            data-modal-toggle="delete-modal-{{ $customer->id }}" type="button"
+                                        <button data-modal-target="pkg-delete-modal-{{ $pkg->id }}"
+                                            data-modal-toggle="pkg-delete-modal-{{ $pkg->id }}" type="button"
                                             class="font-medium text-white bg-red-500 px-2 py-1 rounded border hover:bg-red-800">Delete</button>
-                                        @include('components.modals.delete', ['userId' => $customer->id])
-                                        <a href="{{ route('admin.users.show', ['customer' => $customer->id]) }}"
-                                            class="font-medium text-blue-600 hover:underline">View</a> --}}
+                                        {{-- Delete Modal --}}
+                                        @include('components.modals.delete', [
+                                            'item' => $pkg,
+                                            'tab' => 'pkg',
+                                            'routing' => route('admin.datas.internetpackage.destroy', [
+                                                'internetpackage' => $pkg->id,
+                                            ]),
+                                        ])
+
+                                        <a href="{{ route('admin.datas.internetpackage.show', ['internetpackage' => $pkg->id]) }}"
+                                            class="font-medium text-blue-600 hover:underline">View</a>
                                     </td>
                                 </tr>
                             @empty

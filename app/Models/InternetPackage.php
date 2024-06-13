@@ -9,6 +9,11 @@ class InternetPackage extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'price',
+    ];
+
     public function user()
     {
         return $this->hasMany(User::class);
