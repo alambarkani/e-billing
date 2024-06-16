@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::resource('users', UserController::class);
             Route::prefix('datas')->name('datas.')->group(function () {
+                Route::get('customer/paid', [CustomerController::class, 'paidCustomer'])->name('customer.paid');
                 Route::resource('customer', CustomerController::class);
                 Route::resource('internetpackage', InternetPackageController::class);
             });

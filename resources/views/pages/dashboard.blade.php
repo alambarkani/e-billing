@@ -24,11 +24,11 @@
 
             <div
                 class="max-w-sm bg-blue-500 border pt-6 border-gray-200 rounded-lg shadow text-center flex flex-col justify-between">
-                <div href="#">
+                <div>
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">??</h5>
                 </div>
                 <p class="mb-3 font-normal text-gray-200">Pelanggan Sudah Lunas</p>
-                <a href="#"
+                <a href="{{ route('admin.datas.customer.paid') }}"
                     class="inline-flex justify-center items-center px-3 py-2 mt-6 text-sm font-medium text-center text-white bg-blue-600 rounded-br-lg rounded-bl-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300">
                     Selengkapnya
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"

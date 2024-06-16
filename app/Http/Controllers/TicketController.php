@@ -10,13 +10,13 @@ class TicketController extends Controller
     //
     public function open()
     {
-        $customers = Customer::where('status', false)->get();
+        $customers = Customer::where('acc', false)->latest()->paginate(5);
         return view('pages.admin.ticket.open', compact('customers'));
     }
 
     public function openAccept(Customer $customer)
     {
-        $customer->status = true;
+        $customer->acc = true;
         $customer->save();
         return redirect()->route('admin.tickets.openticket')->with('success', 'Berhasil menyetujui pelanggan');
     }

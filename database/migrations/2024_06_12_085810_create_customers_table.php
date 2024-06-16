@@ -23,8 +23,8 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->boolean('acc')->default(false);
             $table->date('due_date')->nullable();
-            $table->string('house_image_path');
-            $table->string('ktp_image_path');
+            $table->string('house_image_path')->nullable();
+            $table->string('ktp_image_path')->nullable();
             $table->boolean('paid')->default(false);
             $table->unsignedBigInteger('internet_package_id');
 

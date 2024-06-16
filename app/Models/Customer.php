@@ -5,18 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Builder;
 
 class Customer extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory;
+    use Searchable;
 
     protected $fillable = [
-        'customer_id',
-        'identity',
-        'phone',
         'address',
+        'location_name',
+        'status',
+        'acc',
+        'due_date',
+        'paid',
+        'last_payment',
         'internet_package_id',
     ];
+
+    protected $dates = ['due_date'];
 
     public function user()
     {
@@ -31,10 +38,18 @@ class Customer extends Model
     public function toSearchableArray()
     {
         return [
-            'identity' => $this->identity,
-            'phone' => $this->phone,
-            'address' => $this->address,
-            'internet_package_id' => $this->internet_package_id,
+            'users.name' => '',
+            'users.account' => '',
+            'address' => '',
+            'customer_id' => '',
+            'identity' => '',
+            'phone' => '',
+            'due_date' => '',
+            'paid' => '',
+            'last_payment' => '',
+            'location_name' => '',
+            'internet_packages.name' => '',
+            'status' => '',
         ];
     }
 }

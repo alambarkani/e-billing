@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\InternetPackage;
 use App\Models\User;
+use Faker\Factory;
+use Faker\Provider\ar_EG\Internet;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,9 +18,16 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        User::create([
+            'name' => 'super',
+            'account' => 'super',
+            'password' => '123',
+            'role' => 'super_admin',
+        ]);
+
+        InternetPackage::create([
+            'name' => 'basic',
+            'price' => 100000
         ]);
     }
 }
