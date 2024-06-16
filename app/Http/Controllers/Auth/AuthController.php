@@ -28,6 +28,7 @@ class AuthController extends Controller
             $validatedData = $request->validate([
                 'name' => 'required|max:50|string',
                 'identity' => 'required',
+                'email' => 'email|required',
                 'phone' => 'required|numeric',
                 'address' => 'required|string',
                 'internet_package_id' => 'required',
@@ -59,6 +60,7 @@ class AuthController extends Controller
 
             $user = new User();
             $user->name = $request->name;
+            $user->email = $request->email;
             do {
                 $randomInt = random_int(1000, 9999);
                 $exists = User::where('account', $randomInt)->exists();
@@ -97,14 +99,21 @@ class AuthController extends Controller
 
     public function loginPost(Request $request)
     {
-        $credetials = [
+        $credentials = [
             'account' => $request->account,
             'password' => $request->password,
         ];
-        if (Auth::attempt($credetials)) {
+
+        // Cari user berdasarkan account
+        $user = User::where('account', $credentials['account'])->first();
+
+        // Cek jika user ditemukan dan password cocok
+        if ($user && $user->password === $credentials['password']) {
+            Auth::login($user);
             return redirect('/')->with('success', 'Login berhasil');
         }
-        return back()->with('error', 'Email or Password salah');
+
+        return back()->with('error', 'Email atau Password salah');
     }
 
     public function logout()

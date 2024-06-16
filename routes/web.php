@@ -5,6 +5,7 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InternetPackageController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\User\CustomerController;
@@ -31,6 +32,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('users', UserController::class);
             Route::prefix('datas')->name('datas.')->group(function () {
                 Route::get('customer/paid', [CustomerController::class, 'paidCustomer'])->name('customer.paid');
+                Route::get('customer/notpaid', [CustomerController::class, 'notPaidCustomer'])->name('customer.notpaid');
+                Route::get('customer/arrears', [CustomerController::class, 'arrears'])->name('customer.arrears');
                 Route::resource('customer', CustomerController::class);
                 Route::resource('internetpackage', InternetPackageController::class);
             });
@@ -43,4 +46,10 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // Super Admin
+    Route::middleware(['isSuperAdmin'])->group(function () {
+        // Protected routes here
+        Route::prefix('superadmin')->name('superadmin.')->group(function () {
+            Route::resource('companies', CompanyController::class);
+        });
+    });
 });

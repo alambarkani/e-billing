@@ -50,7 +50,7 @@
                             Diskon</a>
                     </li>
                     <li>
-                        <a href="#"
+                        <a href="{{ route('superadmin.companies.index') }}"
                             class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group  hover:bg-gray-700">Data
                             Perusahaan</a>
                     </li>

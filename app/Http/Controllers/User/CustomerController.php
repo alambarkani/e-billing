@@ -70,7 +70,7 @@ class CustomerController extends Controller
         $customer->customer_id = $request->customer_id;
         $customer->user->name = $request->name;
         $customer->user->account = $request->account;
-        $customer->user->password = bcrypt($request->identity);
+        $customer->user->password = $request->identity;
         $customer->identity = $request->identity;
         $customer->phone = $request->phone;
         $customer->address = $request->address;
@@ -150,5 +150,42 @@ class CustomerController extends Controller
             $customer->due_date = Carbon::parse($customer->due_date);
         }
         return view('pages.admin.data.customer.paid.index', compact('customers'));
+    }
+
+    public function notPaidCustomer(Request $request)
+    {
+        if ($request->keyword) {
+            $customers = Customer::search($request->keyword)->query(function ($query) {
+                $query->where('paid', false)->join('users', 'customers.user_id', 'users.id')
+                    ->join('internet_packages', 'customers.internet_package_id', 'internet_packages.id')
+                    ->select('customers.*');
+            })->paginate(5);
+        } else {
+            $customers = Customer::where('paid', false)->latest()->paginate(5);
+        }
+        foreach ($customers as $customer) {
+            $customer->due_date = Carbon::parse($customer->due_date);
+        }
+        return view('pages.admin.data.customer.notpaid.index', compact('customers'));
+    }
+
+    public function arrears(Request $request)
+    {
+        if ($request->keyword) {
+            $customers = Customer::search($request->keyword)->query(function ($query) {
+                $query->where('status', true)->join('users', 'customers.user_id', 'users.id')
+                    ->join('internet_packages', 'customers.internet_package_id', 'internet_packages.id')
+                    ->select('customers.*');
+            })->paginate(5);
+        } else {
+            $customers = Customer::where('status', true)->latest()->paginate(5);
+        }
+        foreach ($customers as $customer) {
+            $customer->due_date = Carbon::parse($customer->due_date);
+            if (Carbon::now()->diffInMonths($customer->last_payment) >= 2) {
+                $customer->in_arrears = true;
+            }
+        }
+        return view('pages.admin.data.customer.arrears.index', compact('customers'));
     }
 }

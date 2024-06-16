@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('house_image_path')->nullable();
             $table->string('ktp_image_path')->nullable();
             $table->boolean('paid')->default(false);
+            $table->boolean('in_arrears')->default(false);
             $table->unsignedBigInteger('internet_package_id');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

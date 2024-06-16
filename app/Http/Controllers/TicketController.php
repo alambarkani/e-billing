@@ -26,4 +26,9 @@ class TicketController extends Controller
         $customer->delete();
         return redirect()->route('admin.tickets.openticket')->with('success', 'Berhasil menolak pelanggan');
     }
+
+    public function createDisruptionTicket(Request $request)
+    {
+        return view('pages.admin.ticket.disruption');
+    }
 }

@@ -21,33 +21,33 @@
                     </ul>
                 </div>
             @endif
-            <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Create new user</h2>
-            <form action="{{ route('admin.users.store') }}" method="POST" enctype="application/x-www-form-urlencoded">
+            <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Buat Data Perusahaan</h2>
+            <form action="{{ route('superadmin.companies.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                     <div class="sm:col-span-2">
-                        <label for="name"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
+                            Perusahaan</label>
                         <input type="text" name="name" id="name" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Nama">
+                            placeholder="Nama Perusahaan">
                         @error('name')
                             <div>{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="sm:col-span-2">
-                        <label for="account"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Account</label>
-                        <input type="text" name="account" id="account" required
+                        <label for="logo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Logo
+                            Perusahaan</label>
+                        <input type="file" name="logo" id="logo" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Account">
-                        @error('account')
+                            placeholder="Logo perusahaan">
+                        @error('logo')
                             <div>{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="sm:col-span-2">
-                        <label for="email"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
+                            Perusahaan</label>
                         <input type="email" name="email" id="email" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="email">
@@ -56,44 +56,31 @@
                         @enderror
                     </div>
                     <div class="sm:col-span-2">
-                        <label for="password"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                        <input type="password" name="password" id="password" required
+                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat
+                            Perusahaan</label>
+                        <textarea type="text" name="address" id="address" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="••••••••">
-                        @error('password')
+                            placeholder="Alamat Perusahaan"></textarea>
+                        @error('address')
                             <div>{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="sm:col-span-2">
-                        <label for="password_confirmation"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm
-                            Password</label>
-                        <input type="password" name="password_confirmation" id="password_confirmation" required
+                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No
+                            Telepon Perusahaan</label>
+                        <input type="tel" name="phone" id="phone" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="••••••••">
-                        @error('password-confirmation')
+                            placeholder="No Telepon Perusahaan">
+                        @error('phone')
                             <div>{{ $message }}</div>
                         @enderror
-                    </div>
-                    <div>
-                        <label for="role"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
-                        <select id="role" name="role" required
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option selected disabled class="bg-gray-200">Select Role</option>
-                            <option value="super_admin" {{ old('role') == 'super_admin' ? 'selected' : '' }}
-                                {{ Auth::user()->role != 'super_admin' ? 'disabled' : '' }}>Super Admin
-                            </option>
-                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                        </select>
                     </div>
                 </div>
                 <button type="submit"
                     class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                    Create user
+                    Buat Data Perusahaan
                 </button>
-                <a href="{{ route('admin.users.index') }}"
+                <a href="{{ route('superadmin.companies.index') }}"
                     class="text-blue-800 text-sm underline underline-offset-2 ml-3 hover:text-blue-300">
                     Kembali
                 </a>
@@ -101,4 +88,4 @@
         </div>
     </section>
 
-@stop
+@endsection

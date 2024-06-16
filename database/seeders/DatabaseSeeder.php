@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Customer;
 use App\Models\InternetPackage;
 use App\Models\User;
 use Faker\Factory;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'super',
             'account' => 'super',
+            'email' => 'alambarkani@gmail.com',
             'password' => '123',
             'role' => 'super_admin',
         ]);
