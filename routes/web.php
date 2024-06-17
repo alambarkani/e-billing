@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InternetPackageController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\User\CustomerController;
 use App\Models\Customer;
@@ -41,6 +42,11 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('openticket', [TicketController::class, 'open'])->name('openticket');
                 Route::put('accept/{customer}', [TicketController::class, 'openAccept'])->name('accept');
                 Route::delete('decline/{customer}', [TicketController::class, 'openDecline'])->name('decline');
+            });
+
+            Route::prefix('messages')->name('messages.')->group(function () {
+                Route::get('wa', [MessageController::class, 'index'])->name('index');
+                Route::post('wa', [MessageController::class, 'send'])->name('send');
             });
         });
     });
