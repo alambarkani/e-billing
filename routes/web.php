@@ -56,6 +56,10 @@ Route::group(['middleware' => 'auth'], function () {
         // Protected routes here
         Route::prefix('superadmin')->name('superadmin.')->group(function () {
             Route::resource('companies', CompanyController::class);
+            Route::prefix('wagw')->name('wagw.')->group(function () {
+                Route::get('wagwconn', [MessageController::class, 'conn'])->name('conn');
+                Route::post('wagwconn', [MessageController::class, 'updateConn'])->name('conn.update');
+            });
         });
     });
 });

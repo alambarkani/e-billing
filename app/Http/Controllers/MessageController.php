@@ -48,4 +48,39 @@ class MessageController extends Controller
 
         return response()->json($response);
     }
+
+    public function conn()
+    {
+        return view('pages.admin.message.wagwconn.index');
+    }
+
+    public function updateConn(Request $request)
+    {
+        $data = $request->only(['app_name', 'app_env']);
+
+        // Update .env file
+        $this->updateEnv($data);
+
+        return redirect()->back()->with('success', 'Token updated successfully.');
+    }
+
+    protected function updateEnv($data)
+    {
+        $envPath = base_path('.env');
+
+        if (file_exists($envPath)) {
+            foreach ($data as $key => $value) {
+                // Sanitize key and value
+                $key = strtoupper($key);
+                $value = trim($value);
+
+                // Replace the value in .env file
+                file_put_contents($envPath, preg_replace(
+                    "/^{$key}=.*/m",
+                    "{$key}={$value}",
+                    file_get_contents($envPath)
+                ));
+            }
+        }
+    }
 }
