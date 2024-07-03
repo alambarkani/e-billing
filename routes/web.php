@@ -1,17 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\InternetPackageController;
-use App\Http\Controllers\MessageController;
+use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\InternetPackageController;
+use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\ProblemController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\User\CustomerController;
-use App\Models\Customer;
-use Illuminate\Auth\Events\Login;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -23,11 +22,14 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', [HomeController::class, 'index']);
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::middleware(['isCustomer'])->group(function () {
+        Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('customer.dashboard');
+    });
 
     // Admin and Above
     Route::middleware(['isAdmin'])->group(function () {
+        Route::get('/adminDashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         // Protected routes here
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::resource('users', UserController::class);
@@ -40,6 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
             });
             Route::prefix('tickets')->name('tickets.')->group(function () {
                 Route::get('openticket', [TicketController::class, 'open'])->name('openticket');
+                Route::get('problem', [ProblemController::class, 'index'])->name('problem');
+                Route::post('problem', [ProblemController::class, 'create'])->name('problem.create');
                 Route::put('accept/{customer}', [TicketController::class, 'openAccept'])->name('accept');
                 Route::delete('decline/{customer}', [TicketController::class, 'openDecline'])->name('decline');
             });
@@ -47,6 +51,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::prefix('messages')->name('messages.')->group(function () {
                 Route::get('wa', [MessageController::class, 'index'])->name('index');
                 Route::post('wa', [MessageController::class, 'send'])->name('send');
+                Route::get('sendpage', [MessageController::class, 'sendPage'])->name('sendPage');
+                Route::get('notifikasi', [MessageController::class, 'notification'])->name('notif');
+                Route::post('notifikasi', [MessageController::class, 'updateNotifMessage'])->name('notif.update');
             });
         });
     });

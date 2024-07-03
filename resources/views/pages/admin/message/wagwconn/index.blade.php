@@ -14,10 +14,9 @@
                 </svg>
             </a>
         </div>
-        <input type="text" class="hidden" name="app_name" value="FONNTE_API_KEY">
         <div class="my-5">
             <label for="apikey" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Api Token</label>
-            <input type="text" id="apikey" value="{{ env('FONNTE_API_KEY') }}" name="app_env"
+            <input type="text" id="apikey" value="{{ env('FONNTE_API_KEY') }}" name="fonnte_api_key"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Dapatkan token di web resmi fonnte.com" required />
         </div>

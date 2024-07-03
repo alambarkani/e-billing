@@ -11,9 +11,18 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return view('pages.dashboard');
+            if (Auth::user()->role == "customer") {
+                return view('pages.customer.dashboard');
+            } else if (Auth::user()->role != 'customer') {
+                return redirect()->route('admin.dashboard');
+            }
         } else {
             return redirect('/login');
         }
+    }
+
+    public function dashboard()
+    {
+        return view('pages.customer.dashboard');
     }
 }

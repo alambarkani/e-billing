@@ -132,7 +132,8 @@ class CustomerController extends Controller
 
     public function show(Customer $customer)
     {
-        return view('pages.admin.data.customer.show', compact('customer'));
+        $pkgs = InternetPackage::all();
+        return view('pages.admin.data.customer.show', compact('customer', 'pkgs'));
     }
 
     public function paidCustomer(Request $request)

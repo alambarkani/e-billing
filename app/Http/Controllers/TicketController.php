@@ -17,6 +17,7 @@ class TicketController extends Controller
     public function openAccept(Customer $customer)
     {
         $customer->acc = true;
+        $customer->status = true;
         $customer->save();
         return redirect()->route('admin.tickets.openticket')->with('success', 'Berhasil menyetujui pelanggan');
     }

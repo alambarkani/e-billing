@@ -30,6 +30,11 @@ class Customer extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function problem()
+    {
+        return $this->hasOne(Problem::class, 'customer_id');
+    }
+
     public function internetPackage()
     {
         return $this->belongsTo(InternetPackage::class, 'internet_package_id');
