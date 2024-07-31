@@ -8,9 +8,11 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\InternetPackageController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Customer\PaymentController;
 use App\Http\Controllers\ProblemController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\User\CustomerController;
+use App\Models\Customer;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -36,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::prefix('datas')->name('datas.')->group(function () {
                 Route::get('customer/paid', [CustomerController::class, 'paidCustomer'])->name('customer.paid');
                 Route::get('customer/notpaid', [CustomerController::class, 'notPaidCustomer'])->name('customer.notpaid');
+                Route::post('customer/notpaid/{customer}', [PaymentController::class, 'confirmPaid'])->name('customer.paid.confirm');
                 Route::get('customer/arrears', [CustomerController::class, 'arrears'])->name('customer.arrears');
                 Route::resource('customer', CustomerController::class);
                 Route::resource('internetpackage', InternetPackageController::class);
