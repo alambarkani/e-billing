@@ -44,6 +44,7 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required|max:50|string',
             'identity' => 'required|string|unique:customers,identity',
+            'email' => 'required|email|unique:users,email',
             'phone' => 'required|numeric',
             'address' => 'required|string',
             'loc' => 'string',
@@ -59,6 +60,7 @@ class CustomerController extends Controller
             $exists = User::where('account', $randomInt)->exists();
         } while ($exists);
         $user->account = (string)$randomInt;
+        $user->email = $request->email;
         $user->password = (string)random_int(1000, 9999);
         $user->save();
 
@@ -70,6 +72,7 @@ class CustomerController extends Controller
         $customer->customer_id = $request->customer_id;
         $customer->user->name = $request->name;
         $customer->user->account = $request->account;
+        $customer->user->email = $request->email;
         $customer->user->password = $request->identity;
         $customer->identity = $request->identity;
         $customer->phone = $request->phone;
@@ -77,6 +80,8 @@ class CustomerController extends Controller
         $customer->location_name = $request->loc;
         $customer->due_date = $due_date;
         $customer->internet_package_id = $request->internet_package_id;
+        $customer->acc = true;
+        $customer->status = true;
         $customer->save();
         return redirect()->route('admin.datas.customer.index')->with('success', 'Data customer ' . $customer->name . ' created successfully');
     }
@@ -93,6 +98,7 @@ class CustomerController extends Controller
             'name' => 'required|max:50|string',
             'customer_id' => 'unique:customers,customer_id,' . $customer->id,
             'identity' => 'required|unique:customers,identity,' . $customer->id,
+            'email' => 'required|email|unique:users,email,' . $customer->id,
             'phone' => 'required|numeric',
             'address' => 'required|string',
             'loc' => 'string',
